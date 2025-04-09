@@ -4,7 +4,7 @@
 
 import Foundation
 import SwiftyJSON
-import Charts
+import DGCharts
 
 class CandleDataExtract : DataExtract {
     override func createData() -> ChartData {
@@ -25,7 +25,7 @@ class CandleDataExtract : DataExtract {
 
         // CandleDataSet only config
         if config["barSpace"].float != nil {
-            candleDataSet.barSpace = CGFloat(config["barShadowColor"].floatValue)
+            candleDataSet.barSpace = CGFloat(config["barSpace"].floatValue)
         }
 
 

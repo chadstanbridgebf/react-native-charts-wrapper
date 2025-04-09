@@ -7,7 +7,7 @@
 
 import Foundation
 
-import Charts
+import DGCharts
 
 class ChartHolder {
     open weak var chart:BarLineChartViewBase?

@@ -2,7 +2,7 @@
 //  Copyright wuxudong
 //
 
-import Charts
+import DGCharts
 import SwiftyJSON
 
 class RNLineChartView: RNBarLineChartViewBase {
@@ -27,6 +27,12 @@ class RNLineChartView: RNBarLineChartViewBase {
         self._chart.delegate = self
         self.addSubview(_chart);
         
+    }
+
+    // Ensure the chart's frame is updated to match the view's bounds during layout updates
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        _chart.frame = self.bounds
     }
     
     required init?(coder aDecoder: NSCoder) {
