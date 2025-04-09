@@ -28,6 +28,12 @@ class RNLineChartView: RNBarLineChartViewBase {
         self.addSubview(_chart);
         
     }
+
+    // Ensure the chart's frame is updated to match the view's bounds during layout updates
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        _chart.frame = self.bounds
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
