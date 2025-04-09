@@ -1,23 +1,14 @@
 # React Native Charts Wrapper
-This library is React Native wrapper of popular Native charting library [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) and [Charts](https://github.com/danielgindi/Charts)
 
+This library is a React Native wrapper for popular native charting libraries [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) and [Charts](https://github.com/danielgindi/Charts).
 
 ## Introduction
 
-Inspired by [react-native-mp-android-chart](https://github.com/mskec/react-native-mp-android-chart) and [react-native-ios-charts](https://github.com/Jpadilla1/react-native-ios-charts)
+Inspired by [react-native-mp-android-chart](https://github.com/mskec/react-native-mp-android-chart) and [react-native-ios-charts](https://github.com/Jpadilla1/react-native-ios-charts), React Native Charts Wrapper is built on MPAndroidChart (v3.1.0) and Charts (v3.3.0), supporting both Android and iOS platforms.
 
-React Native Charts Wrapper is built on MPAndroidChart(v3.1.0) & Charts(v3.3.0), support both android & iOS.
+## Supported Chart Types
 
-
-### ANDROID 
-![](https://raw.githubusercontent.com/wuxudong/react-native-charts-wrapper/master/screenshot/Android%20ScreenShot.png)
-
-### IOS
-![](https://raw.githubusercontent.com/wuxudong/react-native-charts-wrapper/master/screenshot/IOS%20ScreenShot.png)
-
-## Supported Chart Type
-
-* Bar(Stack,Group)
+* Bar (Stack, Group)
 * Line
 * Scatter
 * Bubble
@@ -28,40 +19,34 @@ React Native Charts Wrapper is built on MPAndroidChart(v3.1.0) & Charts(v3.3.0),
 
 ## Setup
 
+### Expo
+1. `expo init demo`
+2. `cd demo`
+3. `expo install react-native-charts-wrapper`
+4. `eas build`
 
-### expo
-1. expo init demo
-2. cd demo
-3. expo install react-native-charts-wrapper
-4. eas build 
+### React Native
+1. `npx react-native init demo`
+2. `cd demo`
+3. `npm install --save react-native-charts-wrapper`
+4. `cd ios && pod install`
+5. `npx react-native run-ios/run-android`
 
-### react-native
+### Sample App.js
 
-
--  npx react-native init demo 
--  cd demo 
--  npm install --save react-native-charts-wrapper
--  cd ios && pod install 
--  npx react-native run-ios/run-android
-
-
-### update App.js 
-
-
- 
-```
+```javascript
 import React from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View, processColor
+  View, 
+  processColor
 } from 'react-native';
 
 import {LineChart} from 'react-native-charts-wrapper';
 
 export default class App extends React.Component {
-
   render() {
     return (
       <View style={{flex: 1}}>
@@ -84,76 +69,65 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
 ```
 
-![](https://raw.githubusercontent.com/wuxudong/react-native-charts-wrapper/master/screenshot/iOS.png)
-
-
-
 ## Usage
-There are 8 supported charts with many configuration options.
-Almost all configuration available in base MPAndroidChart library are available through this wrapper.
-More details on available configuration can be found on their [wiki](https://github.com/PhilJay/MPAndroidChart/wiki).
 
-Example of how charts are used and how to apply configuration can be found in example.
+There are 8 supported chart types with numerous configuration options. Almost all configurations available in the base MPAndroidChart library are accessible through this wrapper. More details on available configurations can be found in their [wiki](https://github.com/PhilJay/MPAndroidChart/wiki).
 
+Examples of how charts are used and how to apply configurations can be found in the example directory.
 
+## Platform Conventions
 
-## Convention
+Android and iOS have different conventions:
 
-Android and IOS have different convention:
+1. Color alpha values in Android range from 0-255, while in iOS they range from 0-1
+2. Percentages in Android range from 0-100, while in iOS they range from 0-1
+3. Animation duration in MPAndroidChart is measured in milliseconds, while in Charts it's measured in seconds
+4. Enum case names always differ between platforms. For example, XAxisPosition in MPAndroidChart is BOTH_SIDED, while in Charts it's bothSided
 
-1. color's alpha in android is 0-255, in ios is 0-1
-2. percent in android is 0-100, in ios is 0-1
-3. animation.duration in MpAndroidChart is milliseconds, in Charts is seconds.
-4. their enum case name is always different, for example XAxisPosition, in MpAndroidChart is BOTH_SIDED, in Charts is bothSided.
+**This library uses Android conventions**
 
-**Here we use android Convention**
-
-**Always use processColor to set color**
-
-
+**Always use `processColor()` to set colors**
 
 ## Data Format
 
-- Complete Form
-
-
-        data : {
-            ...
-            dataSets: [
-                {
-                    values: [
-                        {x: 5, y: 90},
-                        {x: 10, y: 130},
-                        {x: 50, y: 2000, marker: "eat more"},
-                        {x: 80, y: 9000, marker: "eat less"}
-                    ]
-                },
-                ...
+- Complete Form:
+```javascript
+data: {
+    ...
+    dataSets: [
+        {
+            values: [
+                {x: 5, y: 90},
+                {x: 10, y: 130},
+                {x: 50, y: 2000, marker: "eat more"},
+                {x: 80, y: 9000, marker: "eat less"}
             ]
-        }Ï
+        },
+        ...
+    ]
+}
+```
 
-marker is optional,  if x is omitted, index will be used.
+The `marker` property is optional. If `x` is omitted, the index will be used instead.
 
-- Simplified Form
+- Simplified Form:
+```javascript
+data: {
+    ...
+    dataSets: [
+        {
+            values: [5, 40, 77, 81, 43]
+        },
+        ...
+    ]
+}
+```
 
-        data: {
-            ...
-            dataSets: [
-                {
-                    values: [5, 40, 77, 81, 43]
-                },
-                ....
-            ]
-        }
-	
-index will used as x.
+In this case, the index will be used as the x-value.
 
-
-check Example->TimeSeriesLineChart for details
-
+Check Example->TimeSeriesLineChart for more details.
 
 ## Supported Callbacks
 
@@ -163,7 +137,7 @@ Triggered when a chart value is selected. The event passed back will include the
 
 **onChange**
 
-Triggered for various supported events on each platform. Due to the different nature of gesture handling on each platform as well as the different implementations of the underlying chart libraries, the same events are not supported on every platform. For full details on the supported events, see the table below:
+Triggered for various supported events on each platform. Due to the different nature of gesture handling on each platform and the different implementations of the underlying chart libraries, not all events are supported on every platform. For full details on the supported events, see the table below:
 
 | Event Name | Description | iOS | Android |
 | --------------- | -------- | ------- | ---- |
@@ -174,73 +148,81 @@ Triggered for various supported events on each platform. Due to the different na
 | `chartGestureEnd`   | When a chart gesture ends. | ❌ | ✅ |
 | `chartLongPress`    | When a chart is long pressed. | ❌ | ✅ |
 | `chartSingleTap`    | When a chart is single tapped. | ❌ | ✅ |
-| `chartFling`        | When a chart recieves a fling gesture. | ❌ | ✅ |
-| `doubleTapped`      | When a chart is double tapped | ❌ | ✅ |
+| `chartFling`        | When a chart receives a fling gesture. | ❌ | ✅ |
+| `doubleTapped`      | When a chart is double tapped. | ❌ | ✅ |
 
+Check Example->MultipleChart for more details.
 
-check Example->MultipleChart for details.
+## Direct Function Calls
 
-## Direct Function Call
+The library supports direct function calls. You can use functions like `chart.moveViewToX(...)` and others directly.
 
-Support direct function call.
+Check Example->MovingWindowChart for details.
 
-You can use `chart.moveViewToX(...)` or other functions directly.
+Supported functions:
 
-check Example->MovingWindowChart for details.
+1. `highlights([...])`
+   - Used to highlight entries programmatically, or clear already highlighted entries by passing an empty array: `highlights([])`
 
-supported functions:
+2. `moveViewTo/moveViewToX/moveViewToAnimated/centerViewTo/centerViewToAnimated`
 
-1. highlights([...]) 
+3. `fitScreen`
 
-   it can be used to highlight entries programmatically, or clear already highlighted entries if you pass empty array to it: highlights([])
+4. `setDataAndLockIndex`
+   - By default, charts rescale and move to the beginning of your data when new data is set. This behavior is not desirable when loading more data as users scroll.
+   - `setDataAndLockIndex` maintains the x/y position and zoom level when you load more data.
+   - Due to the implementation of MPAndroidChart, if `setDataAndLockIndex` is triggered by user dragging, the range of new data (xMax - xMin) should equal the original data range for accurate position transition. Otherwise, the chart may suddenly jump to another position.
+   - This restriction only exists in Android; iOS does not have this limitation.
+   - Check the example in InfiniteScrollLineChartScreen.
 
-2. moveViewTo/moveViewToX/moveViewToAnimated/centerViewTo/centerViewToAnimated
-3. fitScreen
-4. setDataAndLockIndex
+## Special Properties
 
-   It will rescale and move to the begining of your data when new data is set by default, this is not expected when you want to load more data when user scrolls.  
-   setDataAndLockIndex will remain x/y/zoom when you load more data.  
-   Because of the implementation of MpAndroidChart, if the action of setDataAndLockIndex is triggered by user dragging,  
-   then the range of new data (xMax - xMin) should be equal to original data(this basicly means size of new data equals to old one), otherwise the calculation of position transition won't be accurate,  
-   use may find the chart suddenly blink to another position.         
-   This restriction only exists in android, in iOS, we have no such problem.
-   
-   You can check the example InfiniteScrollLineChartScreen.
+Several additional properties are available:
 
-## Special properties
+1. `group`, `identifier`, `syncX`, and `syncY`
+   - These properties are useful for implementing linked charts.
+   - Charts will synchronize operations with other charts in the same group. All synchronization is handled at the native level.
+   - Check the example in LinkageChartScreen.
+   - Another method for synchronizing charts is to use the `onChange` callback, but performance may be poorer.
+   - Check the example in MultipleChartScreen.
+   - The stock kLine chart example combines the `group`, `identifier`, and `setDataAndLockIndex` features.
 
-Several extra properties are introduced:
+## Custom Marker Content
 
-1. group&identifier&syncX&syncY
+The library supports custom marker content. Check Example->TimeSeriesLineChart for details.
 
-   They are useful when you want to implement linkage charts.
-   
-   Charts will sync its operation to other charts in the same group. All these sync jobs are done at native side.
-   
-   You can check the example LinkageChartScreen.
-   
-   Another way of syncing charts is to use onChange, but the performace is poor. 
-   You can check the example MultipleChartScreen.
-   
-   
-   There is a stock kLine chart in example, it combines group&identifier and setDataAndLockIndex together.
-      
+## Important Notes
 
-## Custom Marker Content 
+**Chart Sizing**  
+You can set charts to either fixed width and height or use `flex: 1` for responsive sizing.
 
-Support custom marker content. 
+## Conventional Commits
 
-check Example->TimeSeriesLineChart for details.
+This project uses a specification called **Conventional Commits**, please **ensure** this specification is followed when commiting code to this project.
 
-## Notice
+Guide: https://www.conventionalcommits.org/en/v1.0.0/
 
-  
-**size of chart**
+## Pull Requests, Approvals & Releases
 
-you can set chart to fixed width & height, or flex:1
-  
+###### Creating the develop release pull request
 
+Pull Requests made to this project are required in order to merge to **develop** or **main**
 
+When submitting a Pull Request, at least one approval is required before merging.
+
+When constructing a release, ensure that a release branch is created based off of the contents of develop, the only changes contained within this branch should be the version numbers in **package.json**.
+
+The Pull Request should be named as **[develop] release vX.Y.Z**
+
+###### Creating the main release pull request
+
+Once this Pull Request has been created, you will need to generate a new Pull Request based off **main** comparing the **develop** release branch you have just created, this should ensure that all changes that have been made to **develop** since the last release are contained within this update.
+
+The Pull Request should be named as **[main] release vX.Y.Z**
+
+###### Creating the release tag
+
+Once this has been done and both Pull Requests have been merged, a release tag should be generated, named as **vX.Y.Z**
 
 ## License
 The MIT License
